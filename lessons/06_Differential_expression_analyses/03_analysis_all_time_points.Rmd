@@ -21,7 +21,7 @@ library(ggplot2)
 ```{r loading counts objects}
 
 #IMPORTANT Raw counts file
-counts_matrix <- read.table("/scratch/Shares/rinnclass/MASTER_CLASS/lessons/04_RNAseq_Dox/01_Mouse_dox_wt/good_class_RNAseq/pipeline_output/star_salmon/salmon.merged.gene_counts.tsv", header=TRUE, row.names=1)
+counts_matrix <- read.table("/scratch/Shares/rinnclass/MASTER_CLASS/STUDENTS/juke6537/MASTER_CLASS/data/salmon.merged.gene_counts.tsv", header=TRUE, row.names=1)
 
 ```
 
@@ -57,7 +57,7 @@ View(counts_integer)
 
 # Loading Deseq_sample_sheet
 ```{r loading in sample sheet for DESEQ2}
-load("../05_RNAseq_in_R_studio/results/deseq_samples.RData", verbose = T)
+load("/scratch/Shares/rinnclass/MASTER_CLASS/STUDENTS/juke6537/MASTER_CLASS/lessons/05_RNAseq_in_R_studio/results/deseq_samples.RData", verbose = T)
 view(deseq_samples)
 # oops that loaded a count matrix that isn't in integer -let's fix that
 counts_integer <- round(counts_matrix)

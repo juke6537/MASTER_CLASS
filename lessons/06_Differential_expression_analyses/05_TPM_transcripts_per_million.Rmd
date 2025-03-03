@@ -39,11 +39,14 @@ https://www.rna-seqblog.com/rpkm-fpkm-and-tpm-clearly-explained/
 ```{r reading in TPM}
 
 # reading in table TPM
-TPM <- read.table("/scratch/Shares/rinnclass/MASTER_CLASS/lessons/04_RNAseq_Dox/01_Mouse_dox_wt/data/results/star_salmon/salmon.merged.gene_tpm.tsv", header=TRUE, row.names=1)
+TPM <- read.table("/scratch/Shares/rinnclass/MASTER_CLASS/STUDENTS/juke6537/MASTER_CLASS/data/salmon.merged.gene_tpm.tsv", header=TRUE, row.names=1)
 
 view(TPM)
 # Ok so we can see that we are missing our gene_names but have gene_id and a TPM value for each gene across each timepoint
 # NOTE: rownames are gene_id
+
+# delete gene names if needed
+TPM <- TPM[,-1]
 
 ```
 
@@ -81,7 +84,9 @@ were originally made.
 ```{r Distibution of TPM values }
 
 #first the distribution of TPM
-hist(TPM_not_zero$WT_0_R1, xlim = c(0,300), breaks = 1000)
+hist(TPM_not_zero$WT_0_1, xlim = c(0,100), breaks = 1000)
+
+mean(TPM_not_zero$WT_0_1)
 # weird we still see a lot of small values (e.g., 0.2314). let's filter our TPM object differently
 
 # First some cleaning up
@@ -109,13 +114,13 @@ any(rowSums(TPM) < 1)
 # Cool look like we are filtered to any row that adds up to at leat 1 tpm
 
 # Let's see if that histogram changed?
-hist(TPM_filtered$WT_0_R1, xlim = c(0,300), breaks = 1000)
+hist(TPM_filtered$WT_0_1, xlim = c(0,150), breaks = 1000)
 
 # Lets compare means 
-mean(TPM_filtered$WT_0_R1)
+mean(TPM_filtered$WT_0_1)
 
 # Now our non filtered mean
-mean(TPM_not_zero$WT_0_R1)
+mean(TPM_not_zero$WT_0_1)
 ```
 # Result: we see that in one sample the average is about 30-45 TPM
 That is for only one time point and replicate.
@@ -126,7 +131,7 @@ That is for only one time point and replicate.
 We can do this with rowMeans which is like row sum, but will get the mean value of a row
 
 ```{r average TPM across all samples}
-# First let's take the aveargae across the row
+# First let's take the average across the row
 row_means <- rowMeans(TPM_filtered)
 
 # Look at the mean
@@ -156,7 +161,7 @@ In short, always check the mean and SD as a first check on things !
 # This is a nested set of code to mix rowMeans with indexing.
 # what is the 'length' of mean row in TPM_filtered and then index for < 1
 length(rowMeans(TPM_filtered)[rowMeans(TPM_filtered) < 1])
-# Yikes about a quarter of our data has an average TPM vlaue of < 1
+# Yikes about a quarter of our data has an average TPM value of < 1
 # We could think of filtering those out too
 
 ```
@@ -178,7 +183,7 @@ Let's use this as an opportunity to explore for loops more too :)
 
 # First establish time point and replicate cols
 time_points <- c("0", "12", "24", "48", "96")
-replicates <- c("_R1", "_R2", "_R3")
+replicates <- c("_1", "_2", "_3")
 
 X_average_values <- list()
 for (tp in time_points) {
@@ -233,7 +238,7 @@ average_and_stddev_values <- list()
 # now each object into the for loop is "tp"
 for (tp in time_points) {
   # Subset the columns for the current time point and replicates
-  cols <- grep(paste0("WT_", tp, "_R"), colnames(TPM_filtered))
+  cols <- grep(paste0("WT_", tp, "_"), colnames(TPM_filtered))
   
   # Calculate the mean and standard deviation of the replicates for each row
   avg <- rowMeans(TPM_filtered[, cols])
