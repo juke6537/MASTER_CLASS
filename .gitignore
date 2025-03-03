@@ -69,3 +69,4 @@ work/*
 *.bai
 *star_salmon
 *.bigWig
+*lessons/04_RNAseq_Dox/01_Mouse_dox_wt/dox_long/job_output/
