@@ -62,7 +62,6 @@ work/*
 *fa
 *.bed
 *.gz
-
 *.js
 *.css
 *.bam
