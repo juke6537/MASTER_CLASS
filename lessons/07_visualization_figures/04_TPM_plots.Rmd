@@ -16,6 +16,7 @@ library(tibble)
 library(ggplot2)
 library(dplyr)
 source("../../util/00_our_first_function_lesson.R")
+
 ```
 # Goal: use TPM values to make plots of how genes change in abundance due to dox and time
 So far we have been learning to plot using the results of DESEQ2 such as pvalue, padj 
@@ -35,10 +36,10 @@ So take all of this with a grain of salt but is good to measure relative changes
 ```{r loading our RNAseq analysis data TPM & COUNTS}
 
 # load TPM RESULTS: 
-load("/scratch/Shares/rinnclass/MASTER_CLASS/lessons/06_Differential_expression_analyses/results/TPM_results/TPM_results.Rdata")
+load("/scratch/Shares/rinnclass/MASTER_CLASS/STUDENTS/juke6537/MASTER_CLASS/lessons/06_Differential_expression_analyses/results/TPM_results/TPM_results.Rdata")
 
 # laod DESEQ2 results
-load("/scratch/Shares/rinnclass/MASTER_CLASS/lessons/06_Differential_expression_analyses/results/counts_results_DESEQ/DESEQ_results.rdata")
+load("/scratch/Shares/rinnclass/MASTER_CLASS/STUDENTS/juke6537/MASTER_CLASS/lessons/06_Differential_expression_analyses/results/counts_results_DESEQ/DESEQ_results.rdata")
 
 ```
 
@@ -50,6 +51,7 @@ hist(average_and_stddev_values$96_avg)
 # Oh no this doesn't work because of an "integer" value being indexed
 # This can be fixed easily by :
 hist(average_and_stddev_values$'96_avg', xlim = c(0,1000), ylim = c(0,1000), breaks = 1000)
+
 # We can quickly see again that most values are very low and a long right tail on distribution of TPM values!
 ```
 
